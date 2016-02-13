@@ -1,17 +1,32 @@
 <?php
 
 
-$path = 'sample-dir/';
+$path = 'sample-dir';
 
+function getPathType($path) {
+    if ( is_file($path)) {
+        return 'file';
+    } else if (is_link($path)) {
+        return 'link';
+    } else if (is_dir($path)) {
+        return 'dir';
+    }
+
+    return "Unknown";
+}
 
 function directoryToArray( $path, $fullPath, &$parentArray ) {
 
-    // If we have reached a file
+    $parentArray[$path] = [];
+
+    $parentArray[$path]['-type'] = getPathType($fullPath);
+    $parentArray[$path]['-path'] = $fullPath;
+
+    // If it was a file, put the contents
     if (is_file($fullPath)) {
-        return [];
+        $parentArray[$path]['content'] = file_get_contents($fullPath);
     }
 
-    $parentArray[$path] = [];
     $handle = opendir($fullPath);
 
     while($content = readdir($handle)) {
