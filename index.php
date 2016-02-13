@@ -19,8 +19,14 @@ function directoryToArray( $path, $fullPath, &$parentArray ) {
 
     $parentArray[$path] = [];
 
+    $parentArray[$path]['-name'] = $path;
     $parentArray[$path]['-type'] = getPathType($fullPath);
     $parentArray[$path]['-path'] = $fullPath;
+    $parentArray[$path]['-filesize'] = filesize($fullPath);
+    $parentArray[$path]['-mode'] = substr(sprintf('%o', fileperms($fullPath)), -4);
+    $parentArray[$path]['-owner'] = posix_getpwuid(fileowner($fullPath));
+    $parentArray[$path]['-last_modified'] = date('Y-m-d H:i:s', filemtime($fullPath));
+    $parentArray[$path]['-group'] = posix_getgrgid(filegroup($fullPath));
 
     // If it was a file, put the contents
     if (is_file($fullPath)) {
