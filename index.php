@@ -1,6 +1,5 @@
 <?php
 
-
 $path = 'sample-dir';
 
 function getPathType($path) {
@@ -18,11 +17,11 @@ function getPathType($path) {
 function directoryToArray( $path, $fullPath, &$parentArray ) {
 
     $parentArray[$path] = [];
-
+ 
     $parentArray[$path]['-name'] = $path;
     $parentArray[$path]['-type'] = getPathType($fullPath);
     $parentArray[$path]['-path'] = $fullPath;
-    $parentArray[$path]['-filesize'] = filesize($fullPath);
+    $parentArray[$path]['-size'] = filesize($fullPath);
     $parentArray[$path]['-mode'] = substr(sprintf('%o', fileperms($fullPath)), -4);
     $parentArray[$path]['-owner'] = posix_getpwuid(fileowner($fullPath));
     $parentArray[$path]['-last_modified'] = date('Y-m-d H:i:s', filemtime($fullPath));
@@ -45,7 +44,41 @@ function directoryToArray( $path, $fullPath, &$parentArray ) {
     };
 }
 
-$array = [];
-directoryToArray($path, $path, $array);
-echo "<pre>";
-print_r($array);
+function createDirectories($outputDir, $content) {
+
+    if (empty($content) || !is_array($content)) {
+        return;
+    }
+
+    if (!is_dir($outputDir)) {
+        mkdir($outputDir, 0777);
+    }
+
+    foreach ($content as $label => $detail) {
+
+        // if it is a property
+        if ( $label[0] === '-') {
+            continue;
+        }
+
+        $toCreate = $outputDir . '/' . $label;
+
+        if (!is_dir($toCreate)) {
+            echo $toCreate . "<br>";
+            $a = mkdir($toCreate, 0777, true);
+        }
+
+        createDirectories($toCreate, $detail);
+    }
+
+}
+
+// $array = [];
+// directoryToArray($path, $path, $array);
+// $json = json_encode($array);
+// file_put_contents('dir-contents.json', $json);
+
+$json = file_get_contents('dir-contents.json');
+$directories = json_decode($json, true);
+createDirectories('output', $directories);
+
