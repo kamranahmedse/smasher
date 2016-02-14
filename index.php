@@ -17,7 +17,12 @@ function getPathType($path) {
     return "Unknown";
 }
 
-function createItem($itemPath, $detail) {
+function createItem($itemPath, $detail = []) {
+
+    // Default options
+    $defaults = ['-type' => 'dir'];
+    $detail = array_merge($defaults, $detail);
+
     $old = umask(0);
 
     $type = $detail['-type'];
@@ -81,7 +86,7 @@ function createDirectories($outputDir, $content) {
     }
 
     if (!is_dir($outputDir)) {
-        createItem($outputDir, ['-type' => 'dir']);
+        createItem($outputDir);
     }
 
     foreach ($content as $label => $detail) {
@@ -98,22 +103,22 @@ function createDirectories($outputDir, $content) {
             createItem($toCreate, $detail);
         }
 
-        if ($detail['-type'] == 'dir') {
+        if (empty($detail['-type']) || ($detail['-type'] == 'dir')) {
             createDirectories($toCreate, $detail);
         }
     }
     
 }
 
-// $array = [];
-// $path = 'sample-dir';
-// directoryToArray($path, $path, $array);
-// $json = json_encode($array);
-// file_put_contents('dir-contents.json', $json);
+$array = [];
+$path = 'sample-dir';
+directoryToArray($path, $path, $array);
+$json = json_encode($array);
+file_put_contents('dir-contents.json', $json);
 
-// die($json);
+die($json);
 
-$json = file_get_contents('dir-contents.json');
-$directories = json_decode($json, true);
-createDirectories('output', $directories);
+// $json = file_get_contents('dir-contents.json');
+// $directories = json_decode($json, true);
+// createDirectories('output', $directories);
 
