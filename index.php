@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(-1);
+ini_set('display_errors', 'On');
+
 $path = 'sample-dir';
 
 function getPathType($path) {
@@ -51,7 +54,9 @@ function createDirectories($outputDir, $content) {
     }
 
     if (!is_dir($outputDir)) {
+        $old = umask(0);
         mkdir($outputDir, 0777);
+        umask($old);
     }
 
     foreach ($content as $label => $detail) {
@@ -65,7 +70,10 @@ function createDirectories($outputDir, $content) {
 
         if (!is_dir($toCreate)) {
             echo $toCreate . "<br>";
-            $a = mkdir($toCreate, 0777, true);
+
+            $old = umask(0);
+            mkdir($toCreate, 0777, true);
+            umask($old);
         }
 
         createDirectories($toCreate, $detail);
