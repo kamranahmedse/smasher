@@ -32,7 +32,10 @@ function createItem($itemPath, $detail) {
         fclose($handle);
 
     } else if ($type === 'link') {
+        $target = $detail['-destination'];
+        $link = $itemPath;
 
+        symlink($target, $link);
     }
 
     umask($old);
@@ -53,6 +56,7 @@ function directoryToArray( $path, $fullPath, &$parentArray ) {
 
     if($itemType === 'link') {
         // Save the link detail
+        $parentArray[$path]['-destination'] = realpath($fullPath);
     } else if ($itemType === 'file') {
         // If it was a file, put the contents
         $parentArray[$path]['-content'] = file_get_contents($fullPath);
@@ -102,9 +106,12 @@ function createDirectories($outputDir, $content) {
 }
 
 // $array = [];
+// $path = 'sample-dir';
 // directoryToArray($path, $path, $array);
 // $json = json_encode($array);
 // file_put_contents('dir-contents.json', $json);
+
+// die($json);
 
 $json = file_get_contents('dir-contents.json');
 $directories = json_decode($json, true);
