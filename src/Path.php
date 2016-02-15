@@ -9,7 +9,7 @@ class Path
 {
     private $path;
 
-    function __construct($path)
+    function __construct($path = '')
     {
         $this->path = $path;
     }
@@ -47,7 +47,7 @@ class Path
     }
 
     public function getType() {
-        
+
         if ( is_file($this->path)) {
             return 'file';
         } else if (is_link($this->path)) {

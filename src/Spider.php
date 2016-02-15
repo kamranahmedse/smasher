@@ -14,7 +14,11 @@ class Spider
         $this->path = new Path();
     }
 
-    public function crawl($path, $fullPath, &$parentItem) {
+    public function crawl($path, &$parentItem, $fullPath = '') {
+
+        if (empty($fullPath)) {
+            $fullPath = $path;
+        }
 
         $this->path->setPath($fullPath);
         $parentItem[$path] = $this->path->getDetail();
@@ -28,7 +32,7 @@ class Spider
                     continue;
                 }
 
-                directoryToArray($content, $fullPath . '/' .$content, $parentItem[$path]);
+                $this->crawl($content, $parentItem[$path],  $fullPath . '/' .$content);
             };
         }
     }
