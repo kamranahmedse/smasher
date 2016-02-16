@@ -42,6 +42,10 @@ class Path
         return file_get_contents($this->path);
     }
 
+    public function saveContent($content) {
+        return file_put_contents($this->path, $content);
+    }
+
     public function getPath() {
         return $this->path;
     }

@@ -9,17 +9,19 @@ class Spider
 {
     protected $path;
     protected $formatter;
+    protected $result;
 
     function __construct(FormatterContract $formatter)
     {
         $this->path = new Path();
         $this->formatter = $formatter;
+        $this->result = '';
     }
 
-    public function crawl($path) {
+    public function crawlPath($path, $resultPath = '') {
 
         if (!file_exists($path)) {
-            throw new InvalidPathException("Path: " . $this->path . " not found.");
+            throw new InvalidPathException("Path: " . $path . " not found.");
         } else if (!is_readable($path)) {
             throw new UnreadablePathException("Unable to read the path", 1);
         }
@@ -27,7 +29,15 @@ class Spider
         $result = [];
         $this->probePath($path, $result);
 
-        return $this->formatter->format($result);
+        $this->result = $this->formatter->format($result);
+
+        // If the result path is provided, data will be saved as well
+        if (!empty($resultPath)) {
+            $this->path->setPath($resultPath);
+            $this->path->saveContent($this->result);
+        }
+
+        return $this->result;
     }
 
     public function probePath($path, &$parentItem, $fullPath = '') {
@@ -48,7 +58,7 @@ class Spider
                     continue;
                 }
 
-                $this->crawl($content, $parentItem[$path],  $fullPath . '/' .$content);
+                $this->probePath($content, $parentItem[$path],  $fullPath . '/' .$content);
             };
         }
     }
