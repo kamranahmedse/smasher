@@ -8,13 +8,29 @@
 class Spider
 {
     protected $path;
+    protected $formatter;
 
-    function __construct()
+    function __construct(FormatterContract $formatter)
     {
         $this->path = new Path();
+        $this->formatter = $formatter;
     }
 
-    public function crawl($path, &$parentItem, $fullPath = '') {
+    public function crawl($path) {
+
+        if (!file_exists($path)) {
+            throw new InvalidPathException("Path: " . $this->path . " not found.");
+        } else if (!is_readable($path)) {
+            throw new UnreadablePathException("Unable to read the path", 1);
+        }
+
+        $result = [];
+        $this->probePath($path, $result);
+
+        return $this->formatter->format($result);
+    }
+
+    public function probePath($path, &$parentItem, $fullPath = '') {
 
         if (empty($fullPath)) {
             $fullPath = $path;
