@@ -8,28 +8,25 @@
 class Spider
 {
     protected $path;
-    protected $formatter;
+    protected $response;
     protected $result;
 
-    function __construct(FormatterContract $formatter)
+    function __construct(ResponseContract $response)
     {
         $this->path = new Path();
-        $this->formatter = $formatter;
+        $this->response = $response;
         $this->result = '';
     }
 
     public function crawlPath($path, $resultPath = '') {
 
-        if (!file_exists($path)) {
-            throw new InvalidPathException("Path: " . $path . " not found.");
-        } else if (!is_readable($path)) {
-            throw new UnreadablePathException("Unable to read the path", 1);
-        }
+        $this->path->setPath($path);
+        $this->path->validate();
 
         $result = [];
         $this->probePath($path, $result);
 
-        $this->result = $this->formatter->format($result);
+        $this->result = $this->response->format($result);
 
         // If the result path is provided, data will be saved as well
         if (!empty($resultPath)) {
@@ -62,4 +59,32 @@ class Spider
             };
         }
     }
+
+    private function getFormattedData( $path ) {
+
+        $this->path->setPath($path);
+        $this->path->validate();
+
+        $content = $this->path->getContent();
+
+        $result = $this->response->toArray($content);
+
+        if (empty($result)) {
+            throw new NoContentException("The file ' . $path . ' has no content", 1);
+        } else if (!is_array($result)) {
+            throw new InvalidContentException("The content in file " . $path . " could not be processed", 1);            
+        }
+
+        return $result;
+    }
+
+    public function populatePath($outputDir, $sourcePath, $content = [], $isRecursive = false) {
+
+        if ( $isRecursive === false ) {
+            $content = $this->getFormattedData($sourcePath);
+        }
+
+        
+    }
+
 }

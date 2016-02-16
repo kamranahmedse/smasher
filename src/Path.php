@@ -14,6 +14,14 @@ class Path
         $this->path = $path;
     }
 
+    public function validate() {
+        if (!file_exists($this->path)) {
+            throw new InvalidPathException("Path: " . $this->path . " not found.");
+        } else if (!is_readable($this->path)) {
+            throw new UnreadablePathException("Unable to read the path", 1);
+        }
+    }
+
     public function setPath($path) {
         $this->path = $path;
     }
