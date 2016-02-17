@@ -80,6 +80,34 @@ class Path
         return array_pop($parts);
     }
 
+    public function createItem($detail =  []) {
+        // Default options
+        $defaults = ['-type' => 'dir'];
+        $detail = array_merge($defaults, $detail);
+
+        $old = umask(0);
+
+        $type = $detail['-type'];
+
+        if ($type === 'dir') {
+            mkdir($this->path, 0777, true);
+        } else if ( $type === 'file') {
+            $content = $detail['-content'];
+
+            $handle = fopen($this->path,"wb");
+            fwrite($handle,$content);
+            fclose($handle);
+
+        } else if ($type === 'link') {
+            $target = $detail['-destination'];
+            $link = $this->path;
+
+            symlink($target, $link);
+        }
+
+        umask($old);
+    } 
+
     public function getDetail() {
 
         $pathDetail  = [];

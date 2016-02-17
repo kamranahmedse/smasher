@@ -60,7 +60,7 @@ class Spider
         }
     }
 
-    private function getFormattedData( $path ) {
+    private function getDirectoryContent( $path ) {
 
         $this->path->setPath($path);
         $this->path->validate();
@@ -81,10 +81,32 @@ class Spider
     public function populatePath($outputDir, $sourcePath, $content = [], $isRecursive = false) {
 
         if ( $isRecursive === false ) {
-            $content = $this->getFormattedData($sourcePath);
+            $content = $this->getDirectoryContent($sourcePath);
         }
 
-        
+        if (!is_dir($outputDir)) {
+            $this->path->setPath($outputDir);
+            $this->path->createItem();
+        }
+
+        foreach ($content as $label => $detail) {
+
+            // if it is a property
+            if ( $label[0] === '-') {
+                continue;
+            }
+
+            $toCreate = $outputDir . '/' . $label;
+
+            if (!file_exists($toCreate)) {
+                $this->path->setPath($toCreate);
+                $this->path->createItem($detail);
+            }
+
+            if (empty($detail['-type']) || ($detail['-type'] == 'dir')) {
+                $this->populatePath($toCreate, '', $detail);
+            }
+        }
     }
 
 }
