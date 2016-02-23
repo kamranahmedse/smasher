@@ -1,0 +1,7 @@
+composer.lock
+vendor/
+*.swp
+.idea/*
+.idea
+.DS_Store
+vendor
