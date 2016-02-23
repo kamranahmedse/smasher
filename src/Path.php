@@ -46,7 +46,7 @@ class Path
         return realpath($this->path);
     }
 
-    public function getContent() {
+    public function getFileContent() {
         return file_get_contents($this->path);
     }
 
@@ -82,24 +82,24 @@ class Path
 
     public function createItem($detail =  []) {
         // Default options
-        $defaults = ['-type' => 'dir'];
+        $defaults = ['@type' => 'dir'];
         $detail = array_merge($defaults, $detail);
 
         $old = umask(0);
 
-        $type = $detail['-type'];
+        $type = $detail['@type'];
 
         if ($type === 'dir') {
             mkdir($this->path, 0777, true);
         } else if ( $type === 'file') {
-            $content = $detail['-content'];
+            $content = $detail['@content'];
 
             $handle = fopen($this->path,"wb");
             fwrite($handle,$content);
             fclose($handle);
 
         } else if ($type === 'link') {
-            $target = $detail['-destination'];
+            $target = $detail['@destination'];
             $link = $this->path;
 
             symlink($target, $link);
@@ -126,7 +126,7 @@ class Path
             $pathDetail['@destination'] = $this->getRealPath();
         } else if ($pathDetail['@type'] === 'file') {
             // If it was a file, put the contents
-            $pathDetail['@content'] = $this->getContent();
+            $pathDetail['@content'] = $this->getFileContent();
         }
 
         return $pathDetail;

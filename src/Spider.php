@@ -43,6 +43,9 @@ class Spider
             $fullPath = $path;
         }
 
+        $pathParts = explode('/', $path);
+        $path = $pathParts[count($pathParts) - 1];
+
         $this->path->setPath($fullPath);
         $parentItem[$path] = $this->path->getDetail();
         
@@ -60,12 +63,12 @@ class Spider
         }
     }
 
-    private function getDirectoryContent( $path ) {
+    private function getFileContent( $path ) {
 
         $this->path->setPath($path);
         $this->path->validate();
 
-        $content = $this->path->getContent();
+        $content = $this->path->getFileContent();
 
         $result = $this->response->toArray($content);
 
@@ -81,7 +84,7 @@ class Spider
     public function populatePath($outputDir, $sourcePath, $content = [], $isRecursive = false) {
 
         if ( $isRecursive === false ) {
-            $content = $this->getDirectoryContent($sourcePath);
+            $content = $this->getFileContent($sourcePath);
         }
 
         if (!is_dir($outputDir)) {
@@ -92,7 +95,7 @@ class Spider
         foreach ($content as $label => $detail) {
 
             // if it is a property
-            if ( $label[0] === '-') {
+            if ( $label[0] === '@') {
                 continue;
             }
 
@@ -103,8 +106,8 @@ class Spider
                 $this->path->createItem($detail);
             }
 
-            if (empty($detail['-type']) || ($detail['-type'] == 'dir')) {
-                $this->populatePath($toCreate, '', $detail);
+            if (empty($detail['@type']) || ($detail['@type'] == 'dir')) {
+                $this->populatePath($toCreate, '', $detail, true);
             }
         }
     }
