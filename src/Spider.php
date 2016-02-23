@@ -1,10 +1,16 @@
-<?php 
+<?php namespace KamranAhmed\SquashDir;
+
+
+use KamranAhmed\SquashDir\Contracts\ResponseContract;
+use KamranAhmed\SquashDir\Exceptions\InvalidContentException;
+use KamranAhmed\SquashDir\Exceptions\NoContentException;
+
 
 /**
-* Spider
-* 
-* Responsible for crawling the paths and gathering information
-*/
+ * Spider
+ * 
+ * Responsible for crawling the paths and gathering information
+ */
 class Spider
 {
     protected $path;

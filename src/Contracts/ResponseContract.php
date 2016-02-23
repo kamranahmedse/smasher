@@ -1,4 +1,4 @@
-<?php
+<?php namespace KamranAhmed\SquashDir\Contracts;
 
 /**
  * Interface Response Contract

@@ -1,10 +1,13 @@
-<?php
+<?php namespace KamranAhmed\SquashDir;
+
+use KamranAhmed\SquashDir\Exceptions\InvalidPathException;
+use KamranAhmed\SquashDir\Exceptions\UnreadablePathException;
 
 /**
-* Path
-*
-* Responsible for managing everything related to Paths
-*/
+ * Path
+ *
+ * Responsible for managing everything related to Paths
+ */
 class Path
 {
     private $path;
@@ -81,6 +84,7 @@ class Path
     }
 
     public function createItem($detail =  []) {
+
         // Default options
         $defaults = ['@type' => 'dir'];
         $detail = array_merge($defaults, $detail);

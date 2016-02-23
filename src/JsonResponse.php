@@ -1,4 +1,8 @@
-<?php
+<?php namespace KamranAhmed\SquashDir;
+
+
+use KamranAhmed\SquashDir\Contracts\ResponseContract;
+
 
 class JsonResponse implements ResponseContract
 {
