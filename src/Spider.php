@@ -8,7 +8,7 @@ use KamranAhmed\SquashDir\Exceptions\NoContentException;
 
 /**
  * Spider
- * 
+ *
  * Responsible for crawling the paths and gathering information
  */
 class Spider
@@ -43,8 +43,7 @@ class Spider
         return $this->result;
     }
 
-    public function probePath($path, &$parentItem, $fullPath = '') {
-
+    protected function probePath($path, &$parentItem, $fullPath = '') {
         if (empty($fullPath)) {
             $fullPath = $path;
         }
@@ -54,7 +53,7 @@ class Spider
 
         $this->path->setPath($fullPath);
         $parentItem[$path] = $this->path->getDetail();
-        
+
         if ($this->path->getType() === 'dir') {
             // Recursively iterate the directory and find the inner contents
             $handle = opendir($fullPath);
@@ -81,7 +80,7 @@ class Spider
         if (empty($result)) {
             throw new NoContentException("The file ' . $path . ' has no content", 1);
         } else if (!is_array($result)) {
-            throw new InvalidContentException("The content in file " . $path . " could not be processed", 1);            
+            throw new InvalidContentException("The content in file " . $path . " could not be processed", 1);
         }
 
         return $result;

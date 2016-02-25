@@ -38,7 +38,7 @@ class Path
     }
 
     public function getLastModified() {
-        return date('Y-m-d H:i:s', filemtime($this->path));
+        return gmdate('Y-m-d H:i:s', filemtime($this->path));
     }
 
     public function getGroup() {
@@ -110,7 +110,7 @@ class Path
         }
 
         umask($old);
-    } 
+    }
 
     public function getDetail() {
 
