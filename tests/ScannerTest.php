@@ -12,8 +12,9 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     private $invalidDirPath     = __DIR__ . '/invalid/path/that/does/not/exist';
     private $outputJsonPath     = __DIR__ . '/data/output/sample-path.json';
     private $basePathToPopulate = __DIR__ . '/data/output/';
-    private $populatedDir       = __DIR__ . '/data/output/sample-path';
-    private $populatedFile      = __DIR__ . '/data/output/sample-path/child-item/grand-child/child-file.md';
+
+    private $populatedDir  = __DIR__ . '/data/output/sample-path';
+    private $populatedFile = __DIR__ . '/data/output/sample-path/child-item/grand-child/child-file.md';
 
     private $invalidScanSample = __DIR__ . '/data/scanned-samples/invalid-scan.md';
     private $emptyScanSample   = __DIR__ . '/data/scanned-samples/empty-scan.json';
@@ -36,22 +37,19 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
 
     public function testCanScanPathAndCreateValidResponseFile()
     {
-        $sourceToConvert = $this->sampleDirPath;
-        $outputFile      = $this->outputJsonPath;
-
         $scanner = new Scanner(new JsonResponse());
-        $scanner->scanPath($sourceToConvert, $outputFile);
+        $scanner->scanPath($this->sampleDirPath, $this->outputJsonPath);
 
-        $this->assertTrue(file_exists($outputFile));
+        $this->assertTrue(file_exists($this->outputJsonPath));
 
-        $result = file_get_contents($outputFile);
+        $result = file_get_contents($this->outputJsonPath);
         $this->assertTrue($this->isValidJson($result));
     }
 
     public function testCanPopulatePathUsingInputFile()
     {
         $scanner = new Scanner(new JsonResponse());
-        $scanner->populatePath($this->basePathToPopulate, $this->outputJsonPath);
+        $scanner->populatePath($this->basePathToPopulate, $this->sampleJson);
 
         $this->assertFileExists($this->populatedFile);
     }
@@ -129,6 +127,10 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     {
         if (file_exists($this->populatedDir)) {
             $this->removeDirectory($this->populatedDir);
+        }
+
+        if (file_exists($this->outputJsonPath)) {
+            unlink($this->outputJsonPath);
         }
     }
 

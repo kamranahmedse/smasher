@@ -24,7 +24,6 @@ class Scanner
 
     public function scanPath($path, $resultPath = '')
     {
-
         $this->path->setPath($path);
         $this->path->validate();
 
@@ -36,7 +35,7 @@ class Scanner
         // If the result path is provided, data will be saved as well
         if (!empty($resultPath)) {
             $this->path->setPath($resultPath);
-            $this->path->saveContent($this->result);
+            $this->path->saveFileContent($this->result);
         }
 
         return $this->result;
