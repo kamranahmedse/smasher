@@ -4,15 +4,15 @@ namespace KamranAhmed\SquashDir;
 
 use ReflectionClass;
 
-class SpiderTest extends \PHPUnit_Framework_TestCase
+class ScannerTest extends \PHPUnit_Framework_TestCase
 {
     private $sampleDirPath  = __DIR__ . '/data/sample-path';
     private $outputJsonPath = __DIR__ . '/data/output/sample-path.json';
 
     public function testCanCrawlPathAndGetJsonResult()
     {
-        $spider      = new Spider(new JsonResponse());
-        $crawlResult = $spider->crawlPath($this->sampleDirPath);
+        $spider      = new Scanner(new JsonResponse());
+        $crawlResult = $spider->scanPath($this->sampleDirPath);
 
         $this->assertTrue($this->isValidJson($crawlResult));
     }
@@ -29,8 +29,8 @@ class SpiderTest extends \PHPUnit_Framework_TestCase
         $sourceToConvert = $this->sampleDirPath;
         $outputFile      = $this->outputJsonPath;
 
-        $spider = new Spider(new JsonResponse());
-        $spider->crawlPath($sourceToConvert, $outputFile);
+        $spider = new Scanner(new JsonResponse());
+        $spider->scanPath($sourceToConvert, $outputFile);
 
         $this->assertTrue(file_exists($outputFile));
 
@@ -40,7 +40,7 @@ class SpiderTest extends \PHPUnit_Framework_TestCase
 
     public function testSpiderCanProbePathAndGenerateArrayOfContent()
     {
-        $spider = new Spider(new JsonResponse());
+        $spider = new Scanner(new JsonResponse());
         $output = [];
 
         $this->callProtectedMethod($spider, 'probePath', [

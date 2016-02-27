@@ -11,7 +11,7 @@ use KamranAhmed\SquashDir\Exceptions\NoContentException;
  *
  * Responsible for crawling the paths and gathering information
  */
-class Spider
+class Scanner
 {
     protected $path;
     protected $response;
@@ -24,7 +24,7 @@ class Spider
         $this->result = '';
     }
 
-    public function crawlPath($path, $resultPath = '') {
+    public function scanPath($path, $resultPath = '') {
 
         $this->path->setPath($path);
         $this->path->validate();
@@ -68,7 +68,7 @@ class Spider
         }
     }
 
-    private function getFileContent( $path ) {
+    protected function getScannedContent($path ) {
 
         $this->path->setPath($path);
         $this->path->validate();
@@ -89,7 +89,7 @@ class Spider
     public function populatePath($outputDir, $sourcePath, $content = [], $isRecursive = false) {
 
         if ( $isRecursive === false ) {
-            $content = $this->getFileContent($sourcePath);
+            $content = $this->getScannedContent($sourcePath);
         }
 
         if (!is_dir($outputDir)) {
