@@ -1,10 +1,8 @@
 <?php namespace KamranAhmed\SquashDir;
 
-
 use KamranAhmed\SquashDir\Contracts\ResponseContract;
 use KamranAhmed\SquashDir\Exceptions\InvalidContentException;
 use KamranAhmed\SquashDir\Exceptions\NoContentException;
-
 
 /**
  * Spider
@@ -19,12 +17,13 @@ class Scanner
 
     function __construct(ResponseContract $response)
     {
-        $this->path = new Path();
+        $this->path     = new Path();
         $this->response = $response;
-        $this->result = '';
+        $this->result   = '';
     }
 
-    public function scanPath($path, $resultPath = '') {
+    public function scanPath($path, $resultPath = '')
+    {
 
         $this->path->setPath($path);
         $this->path->validate();
@@ -43,13 +42,14 @@ class Scanner
         return $this->result;
     }
 
-    protected function probePath($path, &$parentItem, $fullPath = '') {
+    protected function probePath($path, &$parentItem, $fullPath = '')
+    {
         if (empty($fullPath)) {
             $fullPath = $path;
         }
 
         $pathParts = explode('/', $path);
-        $path = $pathParts[count($pathParts) - 1];
+        $path      = $pathParts[count($pathParts) - 1];
 
         $this->path->setPath($fullPath);
         $parentItem[$path] = $this->path->getDetail();
@@ -58,37 +58,19 @@ class Scanner
             // Recursively iterate the directory and find the inner contents
             $handle = opendir($fullPath);
 
-            while($content = readdir($handle)) {
-                if ( $content == '.' || $content == '..') {
+            while ($content = readdir($handle)) {
+                if ($content == '.' || $content == '..') {
                     continue;
                 }
 
-                $this->probePath($content, $parentItem[$path],  $fullPath . '/' .$content);
+                $this->probePath($content, $parentItem[$path], $fullPath . '/' . $content);
             };
         }
     }
 
-    protected function getScannedContent($path ) {
-
-        $this->path->setPath($path);
-        $this->path->validate();
-
-        $content = $this->path->getFileContent();
-
-        $result = $this->response->toArray($content);
-
-        if (empty($result)) {
-            throw new NoContentException("The file ' . $path . ' has no content", 1);
-        } else if (!is_array($result)) {
-            throw new InvalidContentException("The content in file " . $path . " could not be processed", 1);
-        }
-
-        return $result;
-    }
-
-    public function populatePath($outputDir, $sourcePath, $content = [], $isRecursive = false) {
-
-        if ( $isRecursive === false ) {
+    public function populatePath($outputDir, $sourcePath, $content = [], $isRecursive = false)
+    {
+        if ($isRecursive === false) {
             $content = $this->getScannedContent($sourcePath);
         }
 
@@ -100,7 +82,7 @@ class Scanner
         foreach ($content as $label => $detail) {
 
             // if it is a property
-            if ( $label[0] === '@') {
+            if ($label[0] === '@') {
                 continue;
             }
 
@@ -115,6 +97,26 @@ class Scanner
                 $this->populatePath($toCreate, '', $detail, true);
             }
         }
+    }
+
+    protected function getScannedContent($path)
+    {
+        $this->path->setPath($path);
+        $this->path->validate();
+
+        $content = $this->path->getFileContent();
+
+        if (empty($content)) {
+            throw new NoContentException("The file ' . $path . ' has no content", 1);
+        }
+
+        $result = $this->response->toArray($content);
+
+        if (!is_array($result)) {
+            throw new InvalidContentException("The content in file " . $path . " could not be processed", 1);
+        }
+
+        return $result;
     }
 
 }

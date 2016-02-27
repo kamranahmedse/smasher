@@ -2,7 +2,7 @@
 
 use Exception;
 
-class InvalidException extends Exception
+class InvalidContentException extends Exception
 {
     
 }
