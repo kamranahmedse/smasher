@@ -4,5 +4,5 @@ use Exception;
 
 class InvalidContentException extends Exception
 {
-    
+
 }

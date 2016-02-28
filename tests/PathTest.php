@@ -104,7 +104,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
         if ($type == 'dir') {
             rmdir($toCreate);
-        } else if ($type == 'file' || $type == 'link') {
+        } elseif ($type == 'file' || $type == 'link') {
             unlink($toCreate);
         }
     }
@@ -143,4 +143,3 @@ class PathTest extends \PHPUnit_Framework_TestCase
         }
     }
 }
-

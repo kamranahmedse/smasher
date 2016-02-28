@@ -150,4 +150,3 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
         rmdir($directory);
     }
 }
-

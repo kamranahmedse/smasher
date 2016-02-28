@@ -11,7 +11,7 @@ class Path
 {
     private $path;
 
-    function __construct($path = '')
+    public function __construct($path = '')
     {
         $this->path = $path;
     }
@@ -29,7 +29,7 @@ class Path
     {
         if (!file_exists(dirname($this->path))) {
             mkdir(dirname($this->path), 0777, true);
-        } else if (is_dir($this->path)) {
+        } elseif (is_dir($this->path)) {
             throw new InvalidPathException("You can only write content to file");
         }
 
@@ -58,14 +58,14 @@ class Path
 
         if ($type === 'dir' && !file_exists($this->path)) {
             mkdir($this->path, 0777, true);
-        } else if ($type === 'file') {
+        } elseif ($type === 'file') {
             $content = $detail['@content'];
 
             $handle = fopen($this->path, "wb");
             fwrite($handle, $content);
             fclose($handle);
 
-        } else if ($type === 'link') {
+        } elseif ($type === 'link') {
             $target = $detail['@destination'];
             $link   = $this->path;
 
@@ -91,7 +91,7 @@ class Path
         if ($pathDetail['@type'] === 'link') {
             // Save the destination of this symlink
             $pathDetail['@destination'] = $this->getRealPath();
-        } else if ($pathDetail['@type'] === 'file') {
+        } elseif ($pathDetail['@type'] === 'file') {
             // If it was a file, put the contents
             $pathDetail['@content'] = $this->getFileContent();
         }
@@ -110,9 +110,9 @@ class Path
     {
         if (is_file($this->path)) {
             return 'file';
-        } else if (is_link($this->path)) {
+        } elseif (is_link($this->path)) {
             return 'link';
-        } else if (is_dir($this->path)) {
+        } elseif (is_dir($this->path)) {
             return 'dir';
         }
 

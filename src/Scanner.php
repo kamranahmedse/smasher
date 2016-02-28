@@ -15,7 +15,7 @@ class Scanner
     protected $response;
     protected $result;
 
-    function __construct(ResponseContract $response)
+    public function __construct(ResponseContract $response)
     {
         $this->path     = new Path();
         $this->response = $response;
@@ -117,5 +117,4 @@ class Scanner
 
         return $result;
     }
-
 }

@@ -3,8 +3,8 @@
 /**
  * Interface Response Contract
  */
-interface ResponseContract {
-
+interface ResponseContract
+{
     /**
      * Formats the passed data
      * @param  array $data The data which is to be formatted
