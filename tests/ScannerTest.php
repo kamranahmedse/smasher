@@ -23,7 +23,7 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     public function testCanScanPathAndGetResult()
     {
         $scanner    = new Scanner(new JsonResponse());
-        $scanResult = $scanner->scanPath($this->sampleDirPath);
+        $scanResult = $scanner->scan($this->sampleDirPath);
 
         $this->assertTrue($this->isValidJson($scanResult));
     }
@@ -38,7 +38,7 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     public function testCanScanPathAndCreateValidResponseFile()
     {
         $scanner = new Scanner(new JsonResponse());
-        $scanner->scanPath($this->sampleDirPath, $this->outputJsonPath);
+        $scanner->scan($this->sampleDirPath, $this->outputJsonPath);
 
         $this->assertTrue(file_exists($this->outputJsonPath));
 
@@ -60,7 +60,7 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     public function testThrowsExceptionTryingToScanInvalidPath()
     {
         $scanner = new Scanner(new JsonResponse());
-        $scanner->scanPath($this->invalidDirPath);
+        $scanner->scan($this->invalidDirPath);
     }
 
     public function testCanProbePathAndGenerateArrayOfContent()
@@ -68,7 +68,7 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
         $scanner = new Scanner(new JsonResponse());
         $output  = [];
 
-        $this->callProtectedMethod($scanner, 'probePath', [
+        $this->callProtectedMethod($scanner, 'probe', [
             $this->sampleDirPath,
             &$output,
         ]);
