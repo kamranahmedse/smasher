@@ -8,7 +8,7 @@ interface ResponseContract
     /**
      * Formats the passed data for example a `JsonResponse` will encode to json, `XMLResponse`
      * will encode to xml etc
-     * @param  array $data The data which is to be formatted
+     * @param  array $data The data which is to be encoded
      * @return string
      */
     public function encode($data);

@@ -1,6 +1,7 @@
 <?php namespace KamranAhmed\Smasher;
 
 use KamranAhmed\Smasher\Exceptions\InvalidPathException;
+use KamranAhmed\Smasher\Exceptions\UnreadablePathException;
 
 /**
  * Path
@@ -9,17 +10,31 @@ use KamranAhmed\Smasher\Exceptions\InvalidPathException;
  */
 class Path
 {
+    /**
+     * @var string Path which is being processed
+     */
     private $path;
 
+    /**
+     * Path constructor.
+     *
+     * @param string $path
+     */
     public function __construct($path = '')
     {
         $this->path = $path;
     }
 
+    /**
+     * Validates whether the path exists or not
+     *
+     * @return bool
+     * @throws \KamranAhmed\Smasher\Exceptions\UnreadablePathException
+     */
     public function validate()
     {
         if (!is_readable($this->path)) {
-            throw new InvalidPathException("Unable to read the path" . $this->path);
+            throw new UnreadablePathException("Unable to read the path" . $this->path);
         }
 
         return true;

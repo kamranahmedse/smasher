@@ -3,9 +3,9 @@
 use Exception;
 
 /**
- * Class InvalidContentException
+ * InvalidContentException
  *
- * @package KamranAhmed\Smasher\Exceptions
+ * To be thrown when the file contains invalid data or the data that couldn't be processed
  */
 class InvalidContentException extends Exception
 {

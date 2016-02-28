@@ -55,7 +55,7 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \KamranAhmed\Smasher\Exceptions\InvalidPathException
+     * @expectedException \KamranAhmed\Smasher\Exceptions\UnreadablePathException
      */
     public function testThrowsExceptionTryingToScanInvalidPath()
     {
