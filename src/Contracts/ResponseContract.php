@@ -1,4 +1,4 @@
-<?php namespace KamranAhmed\SquashDir\Contracts;
+<?php namespace KamranAhmed\Smasher\Contracts;
 
 /**
  * Interface Response Contract
@@ -6,16 +6,17 @@
 interface ResponseContract
 {
     /**
-     * Formats the passed data
+     * Formats the passed data for example a `JsonResponse` will encode to json, `XMLResponse`
+     * will encode to xml etc
      * @param  array $data The data which is to be formatted
-     * @return mixed
+     * @return string
      */
-    public function format($data);
+    public function encode($data);
 
     /**
-     * Creates array from the passed response
-     * @param  string $response The existing response to be formatted to array
+     * Decodes the passed string and creates array from it
+     * @param  string $response The existing response which is to be decoded to array
      * @return array
      */
-    public function toArray($response);
+    public function decode($response);
 }

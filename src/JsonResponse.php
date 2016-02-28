@@ -1,15 +1,15 @@
-<?php namespace KamranAhmed\SquashDir;
+<?php namespace KamranAhmed\Smasher;
 
-use KamranAhmed\SquashDir\Contracts\ResponseContract;
+use KamranAhmed\Smasher\Contracts\ResponseContract;
 
 class JsonResponse implements ResponseContract
 {
-    public function format($data)
+    public function encode($data)
     {
         return json_encode($data);
     }
 
-    public function toArray($response)
+    public function decode($response)
     {
         return json_decode($response, true);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace KamranAhmed\SquashDir;
+namespace KamranAhmed\Smasher;
 
 class PathTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,7 +32,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \KamranAhmed\SquashDir\Exceptions\InvalidPathException
+     * @expectedException \KamranAhmed\Smasher\Exceptions\InvalidPathException
      */
     public function testInvalidPathFailsValidation()
     {
@@ -48,7 +48,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \KamranAhmed\SquashDir\Exceptions\InvalidPathException
+     * @expectedException \KamranAhmed\Smasher\Exceptions\InvalidPathException
      */
     public function testCannotWriteContentToDirectoryPath()
     {

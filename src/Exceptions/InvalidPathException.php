@@ -1,4 +1,4 @@
-<?php namespace KamranAhmed\SquashDir\Exceptions;
+<?php namespace KamranAhmed\Smasher\Exceptions;
 
 use Exception;
 

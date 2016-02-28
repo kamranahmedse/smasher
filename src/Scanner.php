@@ -1,8 +1,8 @@
-<?php namespace KamranAhmed\SquashDir;
+<?php namespace KamranAhmed\Smasher;
 
-use KamranAhmed\SquashDir\Contracts\ResponseContract;
-use KamranAhmed\SquashDir\Exceptions\InvalidContentException;
-use KamranAhmed\SquashDir\Exceptions\NoContentException;
+use KamranAhmed\Smasher\Contracts\ResponseContract;
+use KamranAhmed\Smasher\Exceptions\InvalidContentException;
+use KamranAhmed\Smasher\Exceptions\NoContentException;
 
 /**
  * Spider
@@ -30,7 +30,7 @@ class Scanner
         $result = [];
         $this->probe($path, $result);
 
-        $this->result = $this->response->format($result);
+        $this->result = $this->response->encode($result);
 
         // If the result path is provided, data will be saved as well
         if (!empty($resultPath)) {
@@ -109,7 +109,7 @@ class Scanner
             throw new NoContentException("The file ' . $path . ' has no content", 1);
         }
 
-        $result = $this->response->toArray($content);
+        $result = $this->response->decode($content);
 
         if (!is_array($result)) {
             throw new InvalidContentException("The content in file " . $path . " could not be processed", 1);

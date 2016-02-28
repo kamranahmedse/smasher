@@ -1,7 +1,7 @@
 {
-  "name": "kamranahmedse/squash-dir",
+  "name": "kamranahmedse/smasher",
   "type": "library",
-  "description": "A PHP package to easily convert directories to JSON",
+  "description": "A PHP package to easily smash directories and convert them to JSON",
   "keywords": [
     "json",
     "directories",
@@ -13,7 +13,7 @@
     "folder",
     "folder-to-json"
   ],
-  "homepage": "https://github.com/kamranahmedse/squash-dir",
+  "homepage": "https://github.com/kamranahmedse/smasher",
   "license": "MIT",
   "authors": [
     {
@@ -24,7 +24,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "KamranAhmed\\SquashDir\\": "src/"
+      "KamranAhmed\\Smasher\\": "src/"
     }
   },
   "require": {

@@ -1,6 +1,6 @@
-<?php namespace KamranAhmed\SquashDir;
+<?php namespace KamranAhmed\Smasher;
 
-use KamranAhmed\SquashDir\Exceptions\InvalidPathException;
+use KamranAhmed\Smasher\Exceptions\InvalidPathException;
 
 /**
  * Path

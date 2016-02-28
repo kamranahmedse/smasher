@@ -1,6 +1,6 @@
 <?php
 
-namespace KamranAhmed\SquashDir;
+namespace KamranAhmed\Smasher;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -55,7 +55,7 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \KamranAhmed\SquashDir\Exceptions\InvalidPathException
+     * @expectedException \KamranAhmed\Smasher\Exceptions\InvalidPathException
      */
     public function testThrowsExceptionTryingToScanInvalidPath()
     {
@@ -88,7 +88,7 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \KamranAhmed\SquashDir\Exceptions\InvalidContentException
+     * @expectedException \KamranAhmed\Smasher\Exceptions\InvalidContentException
      */
     public function testGettingContentThrowsExceptionForInvalidFile()
     {
@@ -99,7 +99,7 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \KamranAhmed\SquashDir\Exceptions\NoContentException
+     * @expectedException \KamranAhmed\Smasher\Exceptions\NoContentException
      */
     public function testGettingContentThrowsExceptionForEmptyFile()
     {
