@@ -22,13 +22,13 @@ class Scanner
         $this->result   = '';
     }
 
-    public function scanPath($path, $resultPath = '')
+    public function scan($path, $resultPath = '')
     {
         $this->path->setPath($path);
         $this->path->validate();
 
         $result = [];
-        $this->probePath($path, $result);
+        $this->probe($path, $result);
 
         $this->result = $this->response->format($result);
 
@@ -41,7 +41,7 @@ class Scanner
         return $this->result;
     }
 
-    protected function probePath($path, &$parentItem, $fullPath = '')
+    protected function probe($path, &$parentItem, $fullPath = '')
     {
         if (empty($fullPath)) {
             $fullPath = $path;
@@ -62,7 +62,7 @@ class Scanner
                     continue;
                 }
 
-                $this->probePath($content, $parentItem[$path], $fullPath . '/' . $content);
+                $this->probe($content, $parentItem[$path], $fullPath . '/' . $content);
             };
         }
     }

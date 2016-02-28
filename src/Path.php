@@ -48,7 +48,6 @@ class Path
 
     public function createItem($detail = [])
     {
-
         // Default options
         $defaults = ['@type' => 'dir'];
         $detail   = array_merge($defaults, $detail);
@@ -57,7 +56,7 @@ class Path
 
         $type = $detail['@type'];
 
-        if ($type === 'dir') {
+        if ($type === 'dir' && !file_exists($this->path)) {
             mkdir($this->path, 0777, true);
         } else if ($type === 'file') {
             $content = $detail['@content'];
@@ -109,7 +108,6 @@ class Path
 
     public function getType()
     {
-
         if (is_file($this->path)) {
             return 'file';
         } else if (is_link($this->path)) {
