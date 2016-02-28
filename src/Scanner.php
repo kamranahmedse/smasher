@@ -102,10 +102,32 @@ class Scanner
         }
     }
 
-    public function populatePath($outputDir, $sourcePath, $content = [], $isRecursive = false)
+    /**
+     * Uses the source file to populate the path provided
+     *
+     * @param $outputDir    The directory at which the content from file is to be populated
+     * @param $sourceFile   The file to use for populating
+     */
+    public function populate($outputDir, $sourceFile)
+    {
+        $this->populatePath($outputDir, $sourceFile);
+    }
+
+    /**
+     * Uses the smashed/response file to recursively populate the path
+     *
+     * @param       $outputDir   Where to populate the output
+     * @param       $sourceFile  Path to the source file
+     * @param array $content     The array to use instead of the source file
+     * @param bool  $isRecursive Whether it is the recursive call
+     *
+     * @throws \KamranAhmed\Smasher\Exceptions\InvalidContentException
+     * @throws \KamranAhmed\Smasher\Exceptions\NoContentException
+     */
+    private function populatePath($outputDir, $sourceFile, $content = [], $isRecursive = false)
     {
         if ($isRecursive === false) {
-            $content = $this->getScannedContent($sourcePath);
+            $content = $this->getScannedContent($sourceFile);
         }
 
         if (!is_dir($outputDir)) {
@@ -133,6 +155,17 @@ class Scanner
         }
     }
 
+    /**
+     * Gets the scanned content from passed file
+     *
+     * @param $path
+     *
+     * @throws \KamranAhmed\Smasher\Exceptions\InvalidContentException
+     * @throws \KamranAhmed\Smasher\Exceptions\NoContentException
+     * @throws \KamranAhmed\Smasher\Exceptions\UnreadablePathException
+     *
+     * @return array
+     */
     protected function getScannedContent($path)
     {
         $this->path->setPath($path);

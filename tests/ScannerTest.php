@@ -49,7 +49,7 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     public function testCanPopulatePathUsingInputFile()
     {
         $scanner = new Scanner(new JsonResponse());
-        $scanner->populatePath($this->basePathToPopulate, $this->sampleJson);
+        $scanner->populate($this->basePathToPopulate, $this->sampleJson);
 
         $this->assertFileExists($this->populatedFile);
     }
