@@ -1,11 +1,18 @@
 # Smasher
-
 > Convert directory structure to get array, json, ~XML or YML~ representation 
 
 ## Installation
-You can install it using one of the following methods:
+The recommended way of installation is using composer. Just add `kamranahmedse/smasher` to your project's composer.json file like following:
 
-#### Composer
-The recommended way of installation is using composer.  
+```
+{
+    "require": {
+        "kamranahmedse/smasher": "*"
+    }
+}
+```
+
+And run `composer install` or simply run `composer require kamranahmedse/smasher`
+  
 
 
