@@ -28,8 +28,8 @@ class Path
     /**
      * Validates whether the path exists or not
      *
-     * @return bool
      * @throws \KamranAhmed\Smasher\Exceptions\UnreadablePathException
+     * @return bool
      */
     public function validate()
     {
@@ -40,6 +40,13 @@ class Path
         return true;
     }
 
+    /**
+     * Writes content to the specified path
+     *
+     * @param $content
+     * @throws \KamranAhmed\Smasher\Exceptions\InvalidPathException
+     * @return int
+     */
     public function saveFileContent($content)
     {
         if (!file_exists(dirname($this->path))) {
@@ -51,16 +58,28 @@ class Path
         return file_put_contents($this->path, $content);
     }
 
+    /**
+     * Gets the path which is being operated
+     * @return string
+     */
     public function getPath()
     {
         return $this->path;
     }
 
+    /**
+     * Sets the path to operate on
+     * @param $path
+     */
     public function setPath($path)
     {
         $this->path = $path;
     }
 
+    /**
+     * Creates the path based upon the type of it
+     * @param array $detail
+     */
     public function createItem($detail = [])
     {
         // Default options
@@ -90,6 +109,11 @@ class Path
         umask($old);
     }
 
+    /**
+     * Gets the detail about the currently set path
+     *
+     * @return array
+     */
     public function getDetail()
     {
         $pathDetail = [];
@@ -114,6 +138,11 @@ class Path
         return $pathDetail;
     }
 
+    /**
+     * Gets the name of the currently set path
+     *
+     * @return mixed
+     */
     public function getName()
     {
         $parts = explode('/', $this->path);
@@ -121,6 +150,11 @@ class Path
         return array_pop($parts);
     }
 
+    /**
+     * Gets the type of path i.e. whether it is file, link or dir
+     *
+     * @return string
+     */
     public function getType()
     {
         if (is_file($this->path)) {
@@ -134,36 +168,71 @@ class Path
         return "Unknown";
     }
 
+    /**
+     * Returns the size of the path in bytes
+     *
+     * @return int
+     */
     public function getSize()
     {
         return filesize($this->path);
     }
 
+    /**
+     * Returns the permission that the path has
+     *
+     * @return string
+     */
     public function getMode()
     {
         return substr(sprintf('%o', fileperms($this->path)), -4);
     }
 
+    /**
+     * Returns the detail of the path owner
+     *
+     * @return array
+     */
     public function getOwner()
     {
         return posix_getpwuid(fileowner($this->path));
     }
 
+    /**
+     * Gets the last date when the path was modified
+     *
+     * @return string
+     */
     public function getLastModified()
     {
         return gmdate('Y-m-d H:i:s', filemtime($this->path));
     }
 
+    /**
+     * Returns the detail of the path group
+     *
+     * @return array
+     */
     public function getGroup()
     {
         return posix_getgrgid(filegroup($this->path));
     }
 
+    /**
+     * Gets the real path for the path
+     *
+     * @return string
+     */
     public function getRealPath()
     {
         return realpath($this->path);
     }
 
+    /**
+     * If the set path is file, it returns the contents of the file
+     *
+     * @return string
+     */
     public function getFileContent()
     {
         return file_get_contents($this->path);

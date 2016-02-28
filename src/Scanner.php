@@ -11,10 +11,26 @@ use KamranAhmed\Smasher\Exceptions\NoContentException;
  */
 class Scanner
 {
+    /**
+     * @var \KamranAhmed\Smasher\Path The path to operate on
+     */
     protected $path;
+
+    /**
+     * @var \KamranAhmed\Smasher\Contracts\ResponseContract Format for the response
+     */
     protected $response;
+
+    /**
+     * @var string Encoded response which will be returned
+     */
     protected $result;
 
+    /**
+     * Scanner constructor.
+     *
+     * @param \KamranAhmed\Smasher\Contracts\ResponseContract $response
+     */
     public function __construct(ResponseContract $response)
     {
         $this->path     = new Path();
@@ -22,6 +38,18 @@ class Scanner
         $this->result   = '';
     }
 
+    /**
+     * Scans the provided path and returns the encoded response. Also if
+     * resultPath is provided then the response will be stored in the resultPath
+     *
+     * @param        $path          The path to scan
+     * @param string $resultPath    The path at which the resultant file will be created
+     *
+     * @throws \KamranAhmed\Smasher\Exceptions\InvalidPathException
+     * @throws \KamranAhmed\Smasher\Exceptions\UnreadablePathException
+     *
+     * @return string
+     */
     public function scan($path, $resultPath = '')
     {
         $this->path->setPath($path);
@@ -41,6 +69,13 @@ class Scanner
         return $this->result;
     }
 
+    /**
+     * Probes the path and keeps populating the array with the results
+     *
+     * @param        $path
+     * @param        $parentItem
+     * @param string $fullPath
+     */
     protected function probe($path, &$parentItem, $fullPath = '')
     {
         if (empty($fullPath)) {
