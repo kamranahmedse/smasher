@@ -13,7 +13,7 @@ When you *smash* a directory, all the subdirectories, files, symlinks are conver
 ## Installation
 The recommended way of installation is using composer. Update your project's `composer.json` file and add the following:
 
-```
+```json
 {
     "require": {
         "kamranahmedse/smasher": "*"
@@ -23,7 +23,7 @@ The recommended way of installation is using composer. Update your project's `co
 
 And run `composer install` or simply run 
 
-```
+```bash
 composer require kamranahmedse/smasher
 ```
 
@@ -116,7 +116,7 @@ Also note that: `@` symbol in the beginning of a key represents the property and
 
 In order to extend `smasher` for other formats, all you have to do is create a response class by implementing the `KamranAhmed\Smasher\Contracts\ResponseContract` and pass the instance of that class to the `Scanner` object
 
-```
+```php
 class SuperResponse implements ResponseContract {
 
     /**
