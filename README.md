@@ -1,11 +1,12 @@
 # Smasher - Smash your directories 
 
-> Turn your directory structure to array, Json, ~~XML or YML~~ and vice versa.
+> Turn your directory structure to Json, ~~XML or YML~~ and vice versa.
 
-## What?
-Smasher is a utility that lets you **get a JSON, array, ~~XML or YML~~ representation from your directory structure**, or **use the specified representations to create the directory structure**
+## Introduction
 
-When you *smash* a directory, all the subdirectories, files, symlinks are converted to the representation that you need and when you *build*, the representaion is processed to create the specified structure i.e. directories, files and symlinks are automatically created.
+Smasher is a php utility that lets you **get a JSON, ~~XML or YML~~ representation from your directory structure**, or **use the specified representations to create the directory structure**
+
+When you *smash* a directory, all the subdirectories, files, symlinks are converted to the representation that you specify and when you *build*, the representaion is processed to create the specified structure i.e. directories, files and symlinks are automatically created.
 
 > ..all the subdirectories, files, symlinks are converted to the representation that you need ...and back
 
@@ -26,7 +27,7 @@ And run `composer install` or simply run
 composer require kamranahmedse/smasher
 ```
 
-## How to use?
+## Getting Started
 
 Currently `json` and `array` are the only supported representations however the support for the `xml` and `yml` representations is on it's way. However if you are in a hurry, I will show you how easy it is to do that in a moment.
 
@@ -42,7 +43,7 @@ use KamranAhmed\Smasher\JsonResponse;
 
 **Smashing a directory** Generating JSON representation from the directory
 
-```
+```php
 // Instantiate the scanner class while passing the object
 // of which type you need the response. Currently there is
 // only JsonResponse that we have so..
@@ -59,7 +60,7 @@ $dirJson = $scanner->scan('/directory/to-scan');
 
 **..back to directory structure** Turning the JSON representation back to directory structure
 
-```
+```php
 // Instantiate the scanner class while passing the object
 // of which representation that you are going to use. We are going
 // to convert JSON back to directory structure
@@ -71,11 +72,12 @@ $scanner = new Scanner(new JsonResponse());
 $scanner->populate('output/', 'path/to/representation/to-use.json');
 ```
 
-## The Format
+## Example
 
-Let's say I had the following directory structure:
+Assuming the following directory structure:
 
 ```
+- output
 - sample-path
     - child-item
         - grand-child
@@ -93,319 +95,23 @@ Let's say I had the following directory structure:
              (Text inside some-file)
 ```
 
-It will produce the following output:
+If I want to generate the JSON representation for the `sample-path` and save it inside `output` directory
+
+```php
+use KamranAhmed\Smasher\Scanner;
+use KamranAhmed\Smasher\JsonResponse;
+
+$scanner = new Scanner(new JsonResponse);
+$scanner->scan('sample-path', 'output/sample-path.json');
+```
+
+This will create the json file in `output/sample-path.json` with the representation similar to the following:
+
+// Image here
 
 Also note that: `@` symbol in the beginning of a key represents the property and the keys without the `@` symbol represents a directory
 
-```json
-{
-   "sample-path":{
-      "@name":"sample-path",
-      "@path":"\/Users\/kamranahmed\/Workspace\/hq\/public\/test\/json-to-dir\/tests\/data\/sample-path",
-      "@type":"dir",
-      "@size":170,
-      "@mode":"0755",
-      "@owner":{
-         "name":"kamranahmed",
-         "passwd":"********",
-         "uid":501,
-         "gid":20,
-         "gecos":"Kamran Ahmed",
-         "dir":"\/Users\/kamranahmed",
-         "shell":"\/bin\/zsh"
-      },
-      "@last_modified":"2016-02-27 07:24:19",
-      "@group":{
-         "name":"staff",
-         "passwd":"*",
-         "members":[
-            "root"
-         ],
-         "gid":20
-      },
-      "child-item":{
-         "@name":"child-item",
-         "@path":"\/Users\/kamranahmed\/Workspace\/hq\/public\/test\/json-to-dir\/tests\/data\/sample-path\/child-item",
-         "@type":"dir",
-         "@size":136,
-         "@mode":"0755",
-         "@owner":{
-            "name":"kamranahmed",
-            "passwd":"********",
-            "uid":501,
-            "gid":20,
-            "gecos":"Kamran Ahmed",
-            "dir":"\/Users\/kamranahmed",
-            "shell":"\/bin\/zsh"
-         },
-         "@last_modified":"2016-02-27 07:24:19",
-         "@group":{
-            "name":"staff",
-            "passwd":"*",
-            "members":[
-               "root"
-            ],
-            "gid":20
-         },
-         "grand-child":{
-            "@name":"grand-child",
-            "@path":"\/Users\/kamranahmed\/Workspace\/hq\/public\/test\/json-to-dir\/tests\/data\/sample-path\/child-item\/grand-child",
-            "@type":"dir",
-            "@size":102,
-            "@mode":"0755",
-            "@owner":{
-               "name":"kamranahmed",
-               "passwd":"********",
-               "uid":501,
-               "gid":20,
-               "gecos":"Kamran Ahmed",
-               "dir":"\/Users\/kamranahmed",
-               "shell":"\/bin\/zsh"
-            },
-            "@last_modified":"2016-02-27 07:24:19",
-            "@group":{
-               "name":"staff",
-               "passwd":"*",
-               "members":[
-                  "root"
-               ],
-               "gid":20
-            },
-            "child-file.md":{
-               "@name":"child-file.md",
-               "@path":"\/Users\/kamranahmed\/Workspace\/hq\/public\/test\/json-to-dir\/tests\/data\/sample-path\/child-item\/grand-child\/child-file.md",
-               "@type":"file",
-               "@size":32,
-               "@mode":"0644",
-               "@owner":{
-                  "name":"kamranahmed",
-                  "passwd":"********",
-                  "uid":501,
-                  "gid":20,
-                  "gecos":"Kamran Ahmed",
-                  "dir":"\/Users\/kamranahmed",
-                  "shell":"\/bin\/zsh"
-               },
-               "@last_modified":"2016-02-27 07:24:19",
-               "@group":{
-                  "name":"staff",
-                  "passwd":"*",
-                  "members":[
-                     "root"
-                  ],
-                  "gid":20
-               },
-               "@content":"Some content in the child file.\n"
-            }
-         },
-         "grand-child-sibling":{
-            "@name":"grand-child-sibling",
-            "@path":"\/Users\/kamranahmed\/Workspace\/hq\/public\/test\/json-to-dir\/tests\/data\/sample-path\/child-item\/grand-child-sibling",
-            "@type":"dir",
-            "@size":102,
-            "@mode":"0755",
-            "@owner":{
-               "name":"kamranahmed",
-               "passwd":"********",
-               "uid":501,
-               "gid":20,
-               "gecos":"Kamran Ahmed",
-               "dir":"\/Users\/kamranahmed",
-               "shell":"\/bin\/zsh"
-            },
-            "@last_modified":"2016-02-27 07:24:19",
-            "@group":{
-               "name":"staff",
-               "passwd":"*",
-               "members":[
-                  "root"
-               ],
-               "gid":20
-            },
-            "empty-file":{
-               "@name":"empty-file",
-               "@path":"\/Users\/kamranahmed\/Workspace\/hq\/public\/test\/json-to-dir\/tests\/data\/sample-path\/child-item\/grand-child-sibling\/empty-file",
-               "@type":"file",
-               "@size":0,
-               "@mode":"0644",
-               "@owner":{
-                  "name":"kamranahmed",
-                  "passwd":"********",
-                  "uid":501,
-                  "gid":20,
-                  "gecos":"Kamran Ahmed",
-                  "dir":"\/Users\/kamranahmed",
-                  "shell":"\/bin\/zsh"
-               },
-               "@last_modified":"2016-02-27 07:24:19",
-               "@group":{
-                  "name":"staff",
-                  "passwd":"*",
-                  "members":[
-                     "root"
-                  ],
-                  "gid":20
-               },
-               "@content":""
-            }
-         }
-      },
-      "child-sibling":{
-         "@name":"child-sibling",
-         "@path":"\/Users\/kamranahmed\/Workspace\/hq\/public\/test\/json-to-dir\/tests\/data\/sample-path\/child-sibling",
-         "@type":"dir",
-         "@size":102,
-         "@mode":"0755",
-         "@owner":{
-            "name":"kamranahmed",
-            "passwd":"********",
-            "uid":501,
-            "gid":20,
-            "gecos":"Kamran Ahmed",
-            "dir":"\/Users\/kamranahmed",
-            "shell":"\/bin\/zsh"
-         },
-         "@last_modified":"2016-02-27 07:24:19",
-         "@group":{
-            "name":"staff",
-            "passwd":"*",
-            "members":[
-               "root"
-            ],
-            "gid":20
-         },
-         "nothing-in-this-file.txt":{
-            "@name":"nothing-in-this-file.txt",
-            "@path":"\/Users\/kamranahmed\/Workspace\/hq\/public\/test\/json-to-dir\/tests\/data\/sample-path\/child-sibling\/nothing-in-this-file.txt",
-            "@type":"file",
-            "@size":0,
-            "@mode":"0644",
-            "@owner":{
-               "name":"kamranahmed",
-               "passwd":"********",
-               "uid":501,
-               "gid":20,
-               "gecos":"Kamran Ahmed",
-               "dir":"\/Users\/kamranahmed",
-               "shell":"\/bin\/zsh"
-            },
-            "@last_modified":"2016-02-27 07:24:19",
-            "@group":{
-               "name":"staff",
-               "passwd":"*",
-               "members":[
-                  "root"
-               ],
-               "gid":20
-            },
-            "@content":""
-         }
-      },
-      "child-sibling-2":{
-         "@name":"child-sibling-2",
-         "@path":"\/Users\/kamranahmed\/Workspace\/hq\/public\/test\/json-to-dir\/tests\/data\/sample-path\/child-sibling-2",
-         "@type":"dir",
-         "@size":136,
-         "@mode":"0755",
-         "@owner":{
-            "name":"kamranahmed",
-            "passwd":"********",
-            "uid":501,
-            "gid":20,
-            "gecos":"Kamran Ahmed",
-            "dir":"\/Users\/kamranahmed",
-            "shell":"\/bin\/zsh"
-         },
-         "@last_modified":"2016-02-27 07:24:19",
-         "@group":{
-            "name":"staff",
-            "passwd":"*",
-            "members":[
-               "root"
-            ],
-            "gid":20
-         },
-         "empty-file":{
-            "@name":"empty-file",
-            "@path":"\/Users\/kamranahmed\/Workspace\/hq\/public\/test\/json-to-dir\/tests\/data\/sample-path\/child-sibling-2\/empty-file",
-            "@type":"file",
-            "@size":0,
-            "@mode":"0644",
-            "@owner":{
-               "name":"kamranahmed",
-               "passwd":"********",
-               "uid":501,
-               "gid":20,
-               "gecos":"Kamran Ahmed",
-               "dir":"\/Users\/kamranahmed",
-               "shell":"\/bin\/zsh"
-            },
-            "@last_modified":"2016-02-27 07:24:19",
-            "@group":{
-               "name":"staff",
-               "passwd":"*",
-               "members":[
-                  "root"
-               ],
-               "gid":20
-            },
-            "@content":""
-         },
-         "sibling-child":{
-            "@name":"sibling-child",
-            "@path":"\/Users\/kamranahmed\/Workspace\/hq\/public\/test\/json-to-dir\/tests\/data\/sample-path\/child-sibling-2\/sibling-child",
-            "@type":"dir",
-            "@size":102,
-            "@mode":"0755",
-            "@owner":{
-               "name":"kamranahmed",
-               "passwd":"********",
-               "uid":501,
-               "gid":20,
-               "gecos":"Kamran Ahmed",
-               "dir":"\/Users\/kamranahmed",
-               "shell":"\/bin\/zsh"
-            },
-            "@last_modified":"2016-02-27 07:24:19",
-            "@group":{
-               "name":"staff",
-               "passwd":"*",
-               "members":[
-                  "root"
-               ],
-               "gid":20
-            },
-            "some-file":{
-               "@name":"some-file",
-               "@path":"\/Users\/kamranahmed\/Workspace\/hq\/public\/test\/json-to-dir\/tests\/data\/sample-path\/child-sibling-2\/sibling-child\/some-file",
-               "@type":"file",
-               "@size":22,
-               "@mode":"0644",
-               "@owner":{
-                  "name":"kamranahmed",
-                  "passwd":"********",
-                  "uid":501,
-                  "gid":20,
-                  "gecos":"Kamran Ahmed",
-                  "dir":"\/Users\/kamranahmed",
-                  "shell":"\/bin\/zsh"
-               },
-               "@last_modified":"2016-02-27 07:24:19",
-               "@group":{
-                  "name":"staff",
-                  "passwd":"*",
-                  "members":[
-                     "root"
-                  ],
-                  "gid":20
-               },
-               "@content":"Text in side somefile\n"
-            }
-         }
-      }
-   }
-}
-```
+
 
 ### Extending to support other formats
 
