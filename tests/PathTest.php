@@ -4,10 +4,18 @@ namespace KamranAhmed\Smasher;
 
 class PathTest extends \PHPUnit_Framework_TestCase
 {
-    private $sampleFilePath   = __DIR__ . '/data/scanned-samples/scanned-json.json';
-    private $sampleDirPath    = __DIR__ . '/data/output';
-    private $sampleFileCreate = __DIR__ . '/data/output/new-file.txt';
-    private $invalidPath      = __DIR__ . '/data/non/existing/path';
+    private $sampleFilePath;
+    private $sampleDirPath;
+    private $sampleFileCreate;
+    private $invalidPath;
+
+    public function setUp()
+    {
+        $this->sampleFilePath   = __DIR__ . '/data/scanned-samples/scanned-json.json';
+        $this->sampleDirPath    = __DIR__ . '/data/output';
+        $this->sampleFileCreate = __DIR__ . '/data/output/new-file.txt';
+        $this->invalidPath      = __DIR__ . '/data/non/existing/path';
+    }
 
     public function testCanSetPath()
     {

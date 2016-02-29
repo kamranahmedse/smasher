@@ -8,17 +8,34 @@ use ReflectionClass;
 
 class ScannerTest extends \PHPUnit_Framework_TestCase
 {
-    private $sampleDirPath      = __DIR__ . '/data/sample-path';
-    private $invalidDirPath     = __DIR__ . '/invalid/path/that/does/not/exist';
-    private $outputJsonPath     = __DIR__ . '/data/output/sample-path.json';
-    private $basePathToPopulate = __DIR__ . '/data/output/';
+    private $sampleDirPath;
+    private $invalidDirPath;
+    private $outputJsonPath;
+    private $basePathToPopulate;
 
-    private $populatedDir  = __DIR__ . '/data/output/sample-path';
-    private $populatedFile = __DIR__ . '/data/output/sample-path/child-item/grand-child/child-file.md';
+    private $populatedDir;
+    private $populatedFile;
 
-    private $invalidScanSample = __DIR__ . '/data/scanned-samples/invalid-scan.md';
-    private $emptyScanSample   = __DIR__ . '/data/scanned-samples/empty-scan.json';
-    private $sampleJson        = __DIR__ . '/data/scanned-samples/scanned-json.json';
+    private $invalidScanSample;
+    private $emptyScanSample;
+    private $sampleJson;
+
+    public function setUp()
+    {
+        $currentDir = __DIR__;
+
+        $this->sampleDirPath      = $currentDir . '/data/sample-path';
+        $this->invalidDirPath     = $currentDir . '/invalid/path/that/does/not/exist';
+        $this->outputJsonPath     = $currentDir . '/data/output/sample-path.json';
+        $this->basePathToPopulate = $currentDir . '/data/output/';
+
+        $this->populatedDir  = $currentDir . '/data/output/sample-path';
+        $this->populatedFile = $currentDir . '/data/output/sample-path/child-item/grand-child/child-file.md';
+
+        $this->invalidScanSample = $currentDir . '/data/scanned-samples/invalid-scan.md';
+        $this->emptyScanSample   = $currentDir . '/data/scanned-samples/empty-scan.json';
+        $this->sampleJson        = $currentDir . '/data/scanned-samples/scanned-json.json';
+    }
 
     public function testCanScanPathAndGetResult()
     {
