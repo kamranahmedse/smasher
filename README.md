@@ -16,7 +16,7 @@ When you *smash* a directory, all the subdirectories, files, symlinks are conver
 
 ## Requirements
 
-php >= 5.4.0 is rquired
+php >= 5.4.0 is required
 
 ## Installation
 The recommended way of installation is using composer. Update your project's `composer.json` file and add the following:
