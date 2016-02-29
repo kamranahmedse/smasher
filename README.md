@@ -1,6 +1,6 @@
 # Smasher - Smash your directories 
 
-> Turn your directory structure to Json, ~~XML or YML~~ and vice versa.
+> Turn your directory structure to JSON, ~~XML or YML~~ and vice versa.
 
 [![Build Status](https://travis-ci.org/kamranahmedse/smasher.svg?branch=master)](https://travis-ci.org/kamranahmedse/smasher)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kamranahmedse/smasher/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kamranahmedse/smasher/?branch=master)
