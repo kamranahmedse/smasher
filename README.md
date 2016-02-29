@@ -10,6 +10,10 @@ When you *smash* a directory, all the subdirectories, files, symlinks are conver
 
 > ..all the subdirectories, files, symlinks are converted to the representation that you need ...and back
 
+## Requirements
+
+php >= 5.4.0 is rquired
+
 ## Installation
 The recommended way of installation is using composer. Update your project's `composer.json` file and add the following:
 
