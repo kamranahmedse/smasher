@@ -6,6 +6,13 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
 
+/**
+ * Class ScannerTest
+ *
+ * Tests the Scanner class
+ *
+ * @package KamranAhmed\Smasher
+ */
 class ScannerTest extends \PHPUnit_Framework_TestCase
 {
     private $sampleDirPath;
@@ -20,6 +27,9 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     private $emptyScanSample;
     private $sampleJson;
 
+    /**
+     * Setup the class for testing
+     */
     public function setUp()
     {
         $currentDir = __DIR__;
@@ -47,7 +57,7 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
 
     private function isValidJson($json)
     {
-        $result = json_decode($json);
+        json_decode($json);
 
         return json_last_error() === JSON_ERROR_NONE;
     }
@@ -129,8 +139,6 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     public function testCanGetScannedContentFromJsonFile()
     {
         $scanner = new Scanner(new JsonResponse());
-        $output  = [];
-
         $scannedArray = $this->callProtectedMethod($scanner, 'getScannedContent', [
             $this->sampleJson,
         ]);
@@ -140,6 +148,9 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($scannedArray['sample-path']['child-item']['grand-child']['child-file.md']));
     }
 
+    /**
+     * Remove unnecessary files/directories
+     */
     protected function tearDown()
     {
         if (file_exists($this->populatedDir)) {
