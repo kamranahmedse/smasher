@@ -74,7 +74,7 @@ $scanner->populate('output/', 'path/to/representation/to-use.json');
 
 ## Example
 
-Assuming the following directory structure:
+Assuming the following directory structure.
 
 ```
 - output
@@ -107,10 +107,9 @@ $scanner->scan('sample-path', 'output/sample-path.json');
 
 This will create the json file in `output/sample-path.json` with the representation similar to the following:
 
-// Image here
+![Image of JSON](http://i.imgur.com/ZN5cWAY.png)
 
-Also note that: `@` symbol in the beginning of a key represents the property and the keys without the `@` symbol represents a directory
-
+Also note that: `@` symbol in the beginning of a key represents the property and the keys without the `@` symbol represents a directory. If you'd like to look at the full JSON representation, [have a look at this file](https://raw.githubusercontent.com/kamranahmedse/smasher/master/tests/data/scanned-samples/scanned-json.json)
 
 
 ### Extending to support other formats
@@ -157,7 +156,14 @@ $scanner->populate('output/', 'to-scan.super');
 
 ### Contributing
 
-Contribute to the package by reporting any bugs/suggestions adding support for additional formats or enhancing/improving the available functionality
+- Report any bugs
+- Suggestions for improvement and any additional functionality
+- Add support for additional formats and open a pull request
+- Enhancing or improve the available functionality
+
+### Feedback
+
+I'd love to hear what you have to say. Please open an issue for any feature requests that you may want or the bugs that you notice. Also you can contact me at kamranahmed.se@gmail.com or you can also find me at twitter [@kamranahmed_se](http://twitter.com/kamranahmed_se)
 
 
 
