@@ -16,7 +16,14 @@ When you *smash* a directory, all the subdirectories, files, symlinks are conver
 
 ## Where to Use?
 
-Originally it was written for a friend to let him use it in the cloud formation scripts. However you can use it wherever you want. Here are some of the ideas to get you started. For example, you can use it where you need some sort of virtual filesystem. When parsing several directories, accessing filesystem directly and iterating through the directories means more memory usage and consumption of resources. You may use smasher to index your directories and easily locate the place you are looking for. Or may be you can use it to search files or folders based on some keywords.
+Originally it was written for a friend to let him use it in the cloud formation scripts. However you can use it wherever you want. 
+
+Here are some of the ideas to get you started. For example, you can use it:
+
+- Where you need some sort of virtual filesystem. 
+- When parsing several directories, accessing filesystem directly and iterating through the directories means more memory usage and consumption of resources. 
+- To index your directories and easily locate the place you are looking for. 
+- Or may be you can use it to search files or folders based on some keywords.
 
 I would love to know how you end up using it.
 
