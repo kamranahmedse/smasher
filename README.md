@@ -1,6 +1,6 @@
 # Smasher - Smash your directories 
 
-> Turn your directory structure to JSON, ~~XML or YML~~ and vice versa.
+> Easily turn your directory structure to JSON or Array and vice versa
 
 [![Build Status](https://travis-ci.org/kamranahmedse/smasher.svg?branch=master)](https://travis-ci.org/kamranahmedse/smasher)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kamranahmedse/smasher/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kamranahmedse/smasher/?branch=master)
@@ -8,7 +8,7 @@
 
 ## Introduction
 
-Smasher is a php utility that lets you **get a JSON, ~~XML or YML~~ representation from your directory structure**, or **use the specified representations to create the directory structure**
+Smasher is a php utility that lets you **get a JSON or array~~ representation from your directory structure**, or **use the specified representations to create the directory structure**
 
 When you *smash* a directory, all the subdirectories, files, symlinks are converted to the representation that you specify and when you *build*, the representaion is processed to create the specified structure i.e. directories, files and symlinks are automatically created.
 
@@ -50,7 +50,7 @@ composer require kamranahmedse/smasher
 
 ## Getting Started
 
-Currently `json` and `array` are the only supported representations however the support for the `xml` and `yml` representations is on it's way. However if you are in a hurry, I will show you how easy it is to do that in a moment.
+Currently `json` and `array` are the only supported representations however you can easily extend it to add support for other formats such as XML or YML etc, I will show you how easy it is to do that in a moment.
 
 Let's stick to the topic, how to use, for now.
 
